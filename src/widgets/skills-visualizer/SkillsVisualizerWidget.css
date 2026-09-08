@@ -1,0 +1,257 @@
+.skv__intro {
+  margin: 0 0 1rem;
+  color: var(--text, #3b3946);
+  max-width: 74ch;
+}
+
+.skv__intro a {
+  color: var(--accent, #6366f1);
+}
+
+.skv__intro code {
+  font-family: var(--mono, ui-monospace, monospace);
+  background: var(--bg, #fafafc);
+  border: 1px solid var(--border-color, #d9d7e0);
+  border-radius: 4px;
+  padding: 0.05rem 0.3rem;
+}
+
+.skv__guide {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.skv__guide-card {
+  background: var(--card-bg, #fff);
+  border: 1px solid var(--border-color, #d9d7e0);
+  border-radius: 10px;
+  padding: 0.75rem 0.9rem;
+}
+
+.skv__guide-title {
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--text-h, #08060d);
+  margin-bottom: 0.3rem;
+}
+
+.skv__guide-body {
+  font-size: 0.8rem;
+  color: var(--text-muted, #4b5563);
+  line-height: 1.4;
+}
+
+.skv__panes {
+  display: grid;
+  grid-template-columns: minmax(220px, 280px) 1fr;
+  gap: 1rem;
+  align-items: start;
+}
+
+@media (max-width: 780px) {
+  .skv__panes {
+    grid-template-columns: 1fr;
+  }
+}
+
+.skv__pane {
+  background: var(--card-bg, #fff);
+  border: 1px solid var(--border-color, #d9d7e0);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.skv__pane-title {
+  margin: 0;
+  padding: 0.65rem 0.9rem;
+  font-size: 0.9rem;
+  border-bottom: 1px solid var(--border-color, #d9d7e0);
+  background: var(--bg, #fafafc);
+}
+
+/* --- File tree --- */
+
+.skv__tree {
+  padding: 0.4rem 0.25rem;
+  max-height: 640px;
+  overflow: auto;
+}
+
+.skv__node {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.28rem 0.5rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  cursor: default;
+}
+
+.skv__node--folder {
+  color: var(--text-muted, #4b5563);
+  font-weight: 600;
+}
+
+.skv__node:not(.skv__node--folder) {
+  cursor: pointer;
+}
+
+.skv__node:not(.skv__node--folder):hover {
+  background: var(--bg, #fafafc);
+}
+
+.skv__node--selected {
+  background: color-mix(in srgb, var(--accent, #6366f1) 14%, transparent);
+  color: var(--text-h, #08060d);
+  font-weight: 600;
+}
+
+.skv__node-icon {
+  flex: none;
+}
+
+.skv__node-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* --- Editor pane --- */
+
+.skv__editor-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.65rem 0.9rem;
+  border-bottom: 1px solid var(--border-color, #d9d7e0);
+  background: var(--bg, #fafafc);
+}
+
+.skv__editor-path {
+  font-family: var(--mono, ui-monospace, monospace);
+  font-size: 0.82rem;
+  color: var(--text-h, #08060d);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.skv__editor-lang {
+  flex: none;
+  font-size: 0.72rem;
+  color: var(--text-muted, #4b5563);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.skv__editor-purpose {
+  padding: 0.55rem 0.9rem;
+  font-size: 0.82rem;
+  color: var(--text-muted, #4b5563);
+  border-bottom: 1px dashed var(--border-color, #d9d7e0);
+  background: color-mix(in srgb, var(--accent, #6366f1) 6%, transparent);
+}
+
+.skv__editor-body {
+  max-height: 640px;
+  overflow: auto;
+}
+
+.skv__plain-content {
+  margin: 0;
+  padding: 0.9rem 1rem;
+  font-family: var(--mono, ui-monospace, monospace);
+  font-size: 0.8rem;
+  line-height: 1.55;
+  white-space: pre-wrap;
+  word-break: break-word;
+  color: var(--text, #3b3946);
+}
+
+/* --- Annotated SKILL.md sections --- */
+
+.skv__skillmd {
+  padding: 0.75rem 0.9rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.skv__section {
+  border-left: 4px solid var(--border-color, #d9d7e0);
+  border-radius: 6px;
+  background: var(--bg, #fafafc);
+  padding: 0.6rem 0.8rem 0.75rem;
+}
+
+.skv__section-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.4rem;
+  display: inline-block;
+  cursor: help;
+  border-bottom: 1px dotted currentColor;
+}
+
+.skv__section-content {
+  margin: 0;
+  font-family: var(--mono, ui-monospace, monospace);
+  font-size: 0.8rem;
+  line-height: 1.55;
+  white-space: pre-wrap;
+  word-break: break-word;
+  color: var(--text, #3b3946);
+}
+
+.skv__fm {
+  font-family: var(--mono, ui-monospace, monospace);
+  font-size: 0.8rem;
+  line-height: 1.6;
+}
+
+.skv__fm-fence {
+  color: var(--text-muted, #4b5563);
+}
+
+.skv__fm-field {
+  padding: 0.15rem 0.3rem;
+  margin: 0.1rem 0;
+  border-radius: 4px;
+  cursor: help;
+}
+
+.skv__fm-field:hover {
+  background: color-mix(in srgb, var(--accent, #6366f1) 12%, transparent);
+}
+
+.skv__fm-key {
+  color: #8250df;
+  font-weight: 600;
+}
+
+.skv__fm-value {
+  color: var(--text, #3b3946);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* --- Tooltip --- */
+
+.skv__tooltip {
+  position: fixed;
+  z-index: 50;
+  max-width: 320px;
+  background: var(--text-h, #08060d);
+  color: #fff;
+  font-size: 0.78rem;
+  line-height: 1.4;
+  padding: 0.5rem 0.65rem;
+  border-radius: 8px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  pointer-events: none;
+}

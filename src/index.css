@@ -1,0 +1,125 @@
+:root {
+  --text: #3b3946;
+  --text-h: #08060d;
+  --text-muted: #4b5563;
+  --bg: #fafafc;
+  --border-color: #d9d7e0;
+  --card-bg: #ffffff;
+  --accent: #6366f1;
+
+  --sans: system-ui, "Segoe UI", Roboto, sans-serif;
+  --mono: ui-monospace, Consolas, monospace;
+
+  font: 16px/1.5 var(--sans);
+  color-scheme: light dark;
+  color: var(--text);
+  background: var(--bg);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text: #d1d0d6;
+    --text-h: #f3f4f6;
+    --text-muted: #9aa1ac;
+    --bg: #16171d;
+    --border-color: #2e303a;
+    --card-bg: #1f2028;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+#root {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+  min-height: 100svh;
+}
+
+h1,
+h2,
+h3 {
+  color: var(--text-h);
+  font-weight: 600;
+}
+
+/* --- Dashboard --- */
+.dashboard__header h1 {
+  font-size: 2.25rem;
+  margin: 0 0 0.5rem;
+}
+
+.dashboard__header p {
+  margin: 0 0 2rem;
+  max-width: 640px;
+  color: var(--text);
+}
+
+.dashboard__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1.25rem;
+}
+
+.dashboard__card {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 1.5rem;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.dashboard__card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  border-color: var(--accent);
+}
+
+.dashboard__card-icon {
+  font-size: 2rem;
+  display: inline-block;
+  margin-bottom: 0.5rem;
+}
+
+.dashboard__card h2 {
+  font-size: 1.15rem;
+  margin: 0 0 0.5rem;
+}
+
+.dashboard__card p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--text);
+  opacity: 0.85;
+}
+
+/* --- Widget page --- */
+.widget-page__back {
+  display: inline-block;
+  margin-bottom: 1rem;
+  color: var(--accent);
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.widget-page__back:hover {
+  text-decoration: underline;
+}
+
+.widget-page h1 {
+  font-size: 1.75rem;
+  margin: 0 0 1.25rem;
+}
