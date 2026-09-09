@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   FILE_TREE,
   STEPS,
@@ -128,6 +128,7 @@ function ContextBlockView({ block, tokens }) {
 
 export default function AgentContextWidget() {
   const [stepIndex, setStepIndex] = useState(0); // number of steps applied so far
+  const contextScrollRef = useRef(null);
 
   const totalSteps = STEPS.length;
   const isDone = stepIndex >= totalSteps;
@@ -156,6 +157,16 @@ export default function AgentContextWidget() {
   const totalTokens = tokensPerBlock.reduce((a, b) => a + b, 0);
   const maxTokens = 4000; // purely visual scale for the meter
   const meterPct = Math.min(100, Math.round((totalTokens / maxTokens) * 100));
+
+  useEffect(() => {
+    const scrollNode = contextScrollRef.current;
+    if (!scrollNode) return;
+
+    scrollNode.scrollTo({
+      top: scrollNode.scrollHeight,
+      behavior: "smooth",
+    });
+  }, [appliedSteps.length]);
 
   const handleStep = () => {
     setStepIndex((i) => Math.min(totalSteps, i + 1));
@@ -220,18 +231,20 @@ export default function AgentContextWidget() {
             <div className="actx__meter-fill" style={{ width: `${meterPct}%` }} />
           </div>
 
-          {appliedSteps.length === 0 && (
-            <div className="actx__empty">Context is empty.</div>
-          )}
+          <div ref={contextScrollRef} className="actx__context-scroll">
+            {appliedSteps.length === 0 && (
+              <div className="actx__empty">Context is empty.</div>
+            )}
 
-          <div className="actx__blocks">
-            {appliedSteps.map((step, i) => (
-              <ContextBlockView
-                key={step.id}
-                block={step.contextBlock}
-                tokens={tokensPerBlock[i]}
-              />
-            ))}
+            <div className="actx__blocks">
+              {appliedSteps.map((step, i) => (
+                <ContextBlockView
+                  key={step.id}
+                  block={step.contextBlock}
+                  tokens={tokensPerBlock[i]}
+                />
+              ))}
+            </div>
           </div>
         </section>
       </div>

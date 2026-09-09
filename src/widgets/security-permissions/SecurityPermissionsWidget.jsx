@@ -1,20 +1,59 @@
 import { useMemo, useState } from "react";
 import {
+  AZURE_DEVOPS_REVIEW_EXAMPLE,
+  CODE_REVIEW_CUSTOMIZATION,
+  CODE_REVIEW_FLOW,
+  CODE_REVIEW_METRICS,
+  CODE_REVIEW_NOTES,
+  CODE_REVIEW_PILLARS,
+  CODE_REVIEW_RESOURCES,
   COMMAND_RECIPES,
   CONTROL_LAYERS,
   DOTNET_ARCHITECTURE_OPTIONS,
   EXAMPLE_ROWS,
   HERO_METRICS,
-  LEGACY_BOOTSTRAP,
-  LOCAL_FIRST_GUIDANCE,
+  OFFICIAL_RESOURCES,
   PERSISTENCE_ZONES,
   SAFETY_NOTES,
+  SESSION_COMMANDS,
   TABS,
   VERIFICATION_LOOP_STAGES,
   VERIFICATION_METRICS,
+  VERIFICATION_NOTES,
   VERIFICATION_PILLARS,
+  VERIFICATION_STACK_ROWS,
 } from "./permissionsData.js";
 import "./SecurityPermissionsWidget.css";
+
+function RevealSurface({
+  id,
+  isRevealed,
+  onReveal,
+  className,
+  style,
+  children,
+  as: Component = "div",
+}) {
+  return (
+    <Component
+      className={`${className} spw__reveal-surface${isRevealed ? " is-revealed" : ""}`}
+      style={style}
+    >
+      {!isRevealed ? (
+        <button
+          type="button"
+          className="spw__reveal-button"
+          onClick={() => onReveal(id)}
+          aria-label={`Reveal ${id.replaceAll("-", " ")}`}
+        />
+      ) : null}
+
+      <div className="spw__reveal-content" aria-hidden={!isRevealed}>
+        {children}
+      </div>
+    </Component>
+  );
+}
 
 function ToneColumn({ title, items, tone, emptyLabel }) {
   return (
@@ -35,7 +74,7 @@ function ToneColumn({ title, items, tone, emptyLabel }) {
   );
 }
 
-function CopilotPermissionsTab() {
+function CopilotPermissionsTab({ revealedLookup, onReveal }) {
   const [activeRecipeId, setActiveRecipeId] = useState(COMMAND_RECIPES[0].id);
 
   const activeRecipe = useMemo(
@@ -45,7 +84,13 @@ function CopilotPermissionsTab() {
 
   return (
     <div className="spw__tab-panel">
-      <section className="spw__hero">
+      <RevealSurface
+        id="copilot-permissions-hero"
+        isRevealed={revealedLookup.has("copilot-permissions-hero")}
+        onReveal={onReveal}
+        className="spw__hero spw__hero--left-metrics"
+        as="section"
+      >
         <div className="spw__hero-copy">
           <div className="spw__eyebrow">Copilot Permissions</div>
           <h2>Design the tool surface before the agent takes a step.</h2>
@@ -70,9 +115,77 @@ function CopilotPermissionsTab() {
             </article>
           ))}
         </div>
-      </section>
+      </RevealSurface>
 
-      <section className="spw__section">
+      <RevealSurface
+        id="copilot-permissions-docs"
+        isRevealed={revealedLookup.has("copilot-permissions-docs")}
+        onReveal={onReveal}
+        className="spw__section"
+        as="section"
+      >
+        <div className="spw__section-head">
+          <div>
+            <h3>Official docs and fast resets</h3>
+            <p>
+              Keep the canonical GitHub docs nearby for exact syntax, and keep
+              the highest-impact slash commands close for live sessions.
+            </p>
+          </div>
+        </div>
+
+        <div className="spw__reference-grid">
+          <article className="spw__reference-card">
+            <div className="spw__reference-kicker">Official documentation</div>
+            <h4>GitHub Docs</h4>
+            <p>
+              The docs are the source of truth for permission patterns,
+              precedence rules, persistence, and the difference between
+              session-only and saved approvals.
+            </p>
+            <div className="spw__resource-list">
+              {OFFICIAL_RESOURCES.map((resource) => (
+                <a
+                  key={resource.url}
+                  className="spw__resource-link"
+                  href={resource.url}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <span className="spw__resource-title">{resource.title}</span>
+                  <span className="spw__resource-description">{resource.description}</span>
+                </a>
+              ))}
+            </div>
+          </article>
+
+          <article className="spw__reference-card">
+            <div className="spw__reference-kicker">In-session controls</div>
+            <h4>Slash commands worth remembering</h4>
+            <p>
+              The docs call out two shortcuts that matter most in workshops:
+              one to open everything up temporarily, and one to unwind those
+              decisions cleanly.
+            </p>
+            <div className="spw__session-command-list">
+              {SESSION_COMMANDS.map((item) => (
+                <article key={item.command} className="spw__session-command-card">
+                  <code>{item.command}</code>
+                  <p>{item.effect}</p>
+                </article>
+              ))}
+            </div>
+          </article>
+        </div>
+      </RevealSurface>
+
+      <RevealSurface
+        id="copilot-permissions-layers"
+        isRevealed={revealedLookup.has("copilot-permissions-layers")}
+        onReveal={onReveal}
+        className="spw__section"
+        as="section"
+      >
         <div className="spw__section-head">
           <div>
             <h3>Two control layers, one safer session</h3>
@@ -106,9 +219,15 @@ function CopilotPermissionsTab() {
             </article>
           ))}
         </div>
-      </section>
+      </RevealSurface>
 
-      <section className="spw__section">
+      <RevealSurface
+        id="copilot-permissions-persistence"
+        isRevealed={revealedLookup.has("copilot-permissions-persistence")}
+        onReveal={onReveal}
+        className="spw__section"
+        as="section"
+      >
         <div className="spw__section-head">
           <div>
             <h3>Where approvals persist</h3>
@@ -133,9 +252,15 @@ function CopilotPermissionsTab() {
             </article>
           ))}
         </div>
-      </section>
+      </RevealSurface>
 
-      <section className="spw__section">
+      <RevealSurface
+        id="copilot-permissions-recipes"
+        isRevealed={revealedLookup.has("copilot-permissions-recipes")}
+        onReveal={onReveal}
+        className="spw__section"
+        as="section"
+      >
         <div className="spw__section-head">
           <div>
             <h3>Permission recipes</h3>
@@ -208,9 +333,15 @@ function CopilotPermissionsTab() {
             </div>
           </article>
         </div>
-      </section>
+      </RevealSurface>
 
-      <section className="spw__section">
+      <RevealSurface
+        id="copilot-permissions-examples"
+        isRevealed={revealedLookup.has("copilot-permissions-examples")}
+        onReveal={onReveal}
+        className="spw__section"
+        as="section"
+      >
         <div className="spw__section-head">
           <div>
             <h3>Examples from the docs, translated into intent</h3>
@@ -243,9 +374,15 @@ function CopilotPermissionsTab() {
             </tbody>
           </table>
         </div>
-      </section>
+      </RevealSurface>
 
-      <section className="spw__section spw__section--compact">
+      <RevealSurface
+        id="copilot-permissions-notes"
+        isRevealed={revealedLookup.has("copilot-permissions-notes")}
+        onReveal={onReveal}
+        className="spw__section spw__section--compact"
+        as="section"
+      >
         <div className="spw__section-head">
           <div>
             <h3>Practical advice from the page</h3>
@@ -259,32 +396,39 @@ function CopilotPermissionsTab() {
             </article>
           ))}
         </div>
-      </section>
+      </RevealSurface>
     </div>
   );
 }
 
-function VerificationLoopTab() {
+function CodeReviewAgentTab({ revealedLookup, onReveal }) {
   return (
     <div className="spw__tab-panel">
-      <section className="spw__hero spw__hero--verification">
+      <RevealSurface
+        id="code-review-agent-hero"
+        isRevealed={revealedLookup.has("code-review-agent-hero")}
+        onReveal={onReveal}
+        className="spw__hero spw__hero--review spw__hero--left-metrics"
+        as="section"
+      >
         <div className="spw__hero-copy">
-          <div className="spw__eyebrow">Verification Loop</div>
-          <h2>Make CI the part of the system that distrusts confident code.</h2>
+          <div className="spw__eyebrow">Code Review Agent</div>
+          <h2>Put an AI reviewer inside the pull request loop, not beside it.</h2>
           <p>
-            The agent can move quickly, but merge safety comes from layered
-            verification. The loop starts with explicit instructions, continues
-            with local runs, and ends with protected CI checks that reject bad
-            code before merge.
+            GitHub Copilot code review improves CI/CD by reviewing pull
+            requests in the same workflow your team already uses. That matters
+            even more for LLM-generated code, where plausible output can still
+            hide subtle bugs, weak validation, or risky assumptions.
           </p>
           <div className="spw__hero-note">
-            <strong>Instruction to include:</strong> always run the relevant
-            tests locally before pushing a new PR or updating an existing one.
+            <strong>Why this helps:</strong> fast generated code benefits from a
+            fast second reader that can surface issues before human reviewers
+            spend time untangling them.
           </div>
         </div>
 
         <div className="spw__metric-grid">
-          {VERIFICATION_METRICS.map((metric) => (
+          {CODE_REVIEW_METRICS.map((metric) => (
             <article key={metric.kicker} className="spw__metric-card">
               <div className="spw__metric-kicker">{metric.kicker}</div>
               <div className="spw__metric-value">{metric.value}</div>
@@ -292,20 +436,217 @@ function VerificationLoopTab() {
             </article>
           ))}
         </div>
-      </section>
+      </RevealSurface>
 
-      <section className="spw__section">
+      <RevealSurface
+        id="code-review-agent-flow"
+        isRevealed={revealedLookup.has("code-review-agent-flow")}
+        onReveal={onReveal}
+        className="spw__section"
+        as="section"
+      >
         <div className="spw__section-head">
           <div>
-            <h3>The merge-protection loop</h3>
+            <h3>How it fits into CI/CD</h3>
             <p>
-              These stages work best together: instructions shape behavior,
-              local runs catch the obvious failures, and CI blocks anything that
-              still slips through.
+              The docs describe Copilot code review as an agentic capability
+              powered by GitHub Actions, which makes it a natural PR gate and
+              feedback loop inside automated delivery.
             </p>
           </div>
         </div>
 
+        <div className="spw__loop">
+          {CODE_REVIEW_FLOW.map((stage) => (
+            <article
+              key={stage.id}
+              className="spw__loop-card"
+              style={{ "--spw-accent": stage.accent }}
+            >
+              <div className="spw__loop-step">{stage.step}</div>
+              <h4>{stage.title}</h4>
+              <p>{stage.body}</p>
+            </article>
+          ))}
+        </div>
+      </RevealSurface>
+
+      <RevealSurface
+        id="code-review-agent-pillars"
+        isRevealed={revealedLookup.has("code-review-agent-pillars")}
+        onReveal={onReveal}
+        className="spw__section"
+        as="section"
+      >
+        <div className="spw__section-head">
+          <div>
+            <h3>Why it is useful for LLM-generated code</h3>
+            <p>
+              Generated code often fails in ways that are not obvious from a
+              quick skim. The review agent is most valuable when it adds signal
+              before merge, not when it merely repeats lint output.
+            </p>
+          </div>
+        </div>
+
+        <div className="spw__pillars">
+          {CODE_REVIEW_PILLARS.map((pillar) => (
+            <article
+              key={pillar.id}
+              className="spw__pillar-card"
+              style={{ "--spw-accent": pillar.accent }}
+            >
+              <div className="spw__pillar-header">
+                <span className="spw__pillar-icon">{pillar.icon}</span>
+                <div>
+                  <h4>{pillar.title}</h4>
+                  <p>{pillar.summary}</p>
+                </div>
+              </div>
+              <ul className="spw__bullet-list">
+                {pillar.checks.map((check) => (
+                  <li key={check}>{check}</li>
+                ))}
+              </ul>
+              <div className="spw__pillar-catches">
+                <strong>What this improves:</strong> {pillar.catches}
+              </div>
+            </article>
+          ))}
+        </div>
+      </RevealSurface>
+
+      <RevealSurface
+        id="code-review-agent-customization"
+        isRevealed={revealedLookup.has("code-review-agent-customization")}
+        onReveal={onReveal}
+        className="spw__section"
+        as="section"
+      >
+        <div className="spw__section-head">
+          <div>
+            <h3>Customize the reviewer, not just the code generator</h3>
+            <p>
+              The best review quality comes from teaching Copilot how your
+              repository works and shaping the environment it runs in.
+            </p>
+          </div>
+        </div>
+
+        <div className="spw__architecture-grid">
+          {CODE_REVIEW_CUSTOMIZATION.map((option) => (
+            <article key={option.name} className="spw__architecture-card">
+              <h4>{option.name}</h4>
+              <p>{option.summary}</p>
+            </article>
+          ))}
+        </div>
+      </RevealSurface>
+
+      <RevealSurface
+        id="code-review-agent-example"
+        isRevealed={revealedLookup.has("code-review-agent-example")}
+        onReveal={onReveal}
+        className="spw__section"
+        as="section"
+      >
+        <div className="spw__section-head">
+          <div>
+            <h3>{AZURE_DEVOPS_REVIEW_EXAMPLE.title}</h3>
+            <p>{AZURE_DEVOPS_REVIEW_EXAMPLE.intro}</p>
+          </div>
+        </div>
+
+        <article className="spw__recipe-panel">
+          <div className="spw__terminal">
+            <div className="spw__terminal-bar">
+              <span />
+              <span />
+              <span />
+            </div>
+            <pre>{AZURE_DEVOPS_REVIEW_EXAMPLE.script}</pre>
+          </div>
+
+          <div className="spw__callout">
+            <strong>Important:</strong> {AZURE_DEVOPS_REVIEW_EXAMPLE.note}
+          </div>
+
+          <ul className="spw__bullet-list">
+            {AZURE_DEVOPS_REVIEW_EXAMPLE.details.map((detail) => (
+              <li key={detail}>{detail}</li>
+            ))}
+          </ul>
+        </article>
+      </RevealSurface>
+
+      <RevealSurface
+        id="code-review-agent-resources"
+        isRevealed={revealedLookup.has("code-review-agent-resources")}
+        onReveal={onReveal}
+        className="spw__section"
+        as="section"
+      >
+        <div className="spw__section-head">
+          <div>
+            <h3>Docs to keep handy</h3>
+            <p>
+              These references cover the review workflow itself, automatic
+              review rules, and the broader review model.
+            </p>
+          </div>
+        </div>
+
+        <div className="spw__reference-grid">
+          {CODE_REVIEW_RESOURCES.map((resource) => (
+            <a
+              key={resource.url}
+              className="spw__resource-link"
+              href={resource.url}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <span className="spw__resource-title">{resource.title}</span>
+              <span className="spw__resource-description">{resource.description}</span>
+            </a>
+          ))}
+        </div>
+      </RevealSurface>
+
+      <RevealSurface
+        id="code-review-agent-notes"
+        isRevealed={revealedLookup.has("code-review-agent-notes")}
+        onReveal={onReveal}
+        className="spw__section spw__section--compact"
+        as="section"
+      >
+        <div className="spw__section-head">
+          <div>
+            <h3>Practical caveats</h3>
+          </div>
+        </div>
+        <div className="spw__notes">
+          {CODE_REVIEW_NOTES.map((note) => (
+            <article key={note.title} className="spw__note-card">
+              <h4>{note.title}</h4>
+              <p>{note.body}</p>
+            </article>
+          ))}
+        </div>
+      </RevealSurface>
+    </div>
+  );
+}
+
+function VerificationLoopTab({ revealedLookup, onReveal }) {
+  return (
+    <div className="spw__tab-panel">
+      <RevealSurface
+        id="verification-loop-overview"
+        isRevealed={revealedLookup.has("verification-loop-overview")}
+        onReveal={onReveal}
+        className="spw__section"
+        as="section"
+      >
         <div className="spw__loop">
           {VERIFICATION_LOOP_STAGES.map((stage) => (
             <article
@@ -319,15 +660,22 @@ function VerificationLoopTab() {
             </article>
           ))}
         </div>
-      </section>
+      </RevealSurface>
 
-      <section className="spw__section">
+      <RevealSurface
+        id="verification-loop-pillars"
+        isRevealed={revealedLookup.has("verification-loop-pillars")}
+        onReveal={onReveal}
+        className="spw__section"
+        as="section"
+      >
         <div className="spw__section-head">
           <div>
-            <h3>Checks that stop bad merges</h3>
+            <h3>What each test category enforces</h3>
             <p>
-              Each test type catches a different failure mode. Together they
-              create a much more reliable gate than any single suite can.
+              Each layer closes a different failure mode: missing tests,
+              untested permutations, broken user journeys, or code landing in
+              the wrong architectural layer.
             </p>
           </div>
         </div>
@@ -352,20 +700,68 @@ function VerificationLoopTab() {
                 ))}
               </ul>
               <div className="spw__pillar-catches">
-                <strong>What this catches:</strong> {pillar.catches}
+                <strong>What this blocks:</strong> {pillar.catches}
               </div>
             </article>
           ))}
         </div>
-      </section>
+      </RevealSurface>
 
-      <section className="spw__section">
+      <RevealSurface
+        id="verification-loop-pr-gate"
+        isRevealed={revealedLookup.has("verification-loop-pr-gate")}
+        onReveal={onReveal}
+        className="spw__section"
+        as="section"
+      >
         <div className="spw__section-head">
           <div>
-            <h3>.NET architecture-test equivalents to Konsist</h3>
+            <h3>Recommended tooling in the PR gate</h3>
             <p>
-              For C#/.NET teams, these are the closest fits when you want
-              executable rules around structure, layering, and dependencies.
+              The gate should show missing tests, prove the real UI, and reject
+              structural shortcuts. Keep the tooling visible in the PR so both
+              the agent and reviewers can act on it.
+            </p>
+          </div>
+        </div>
+
+        <div className="spw__table-wrap">
+          <table className="spw__table">
+            <thead>
+              <tr>
+                <th>PR gate</th>
+                <th>Requirement</th>
+                <th>Tooling</th>
+                <th>Why it belongs</th>
+              </tr>
+            </thead>
+            <tbody>
+              {VERIFICATION_STACK_ROWS.map((row) => (
+                <tr key={row.layer}>
+                  <td>{row.layer}</td>
+                  <td>{row.requirement}</td>
+                  <td>{row.tooling}</td>
+                  <td>{row.purpose}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </RevealSurface>
+
+      <RevealSurface
+        id="verification-loop-architecture"
+        isRevealed={revealedLookup.has("verification-loop-architecture")}
+        onReveal={onReveal}
+        className="spw__section"
+        as="section"
+      >
+        <div className="spw__section-head">
+          <div>
+            <h3>Architecture test options for .NET teams</h3>
+            <p>
+              For .NET applications, these are the architecture-testing tools
+              to wire into the same PR loop as behavior and UI checks.
             </p>
           </div>
         </div>
@@ -378,80 +774,59 @@ function VerificationLoopTab() {
             </article>
           ))}
         </div>
-      </section>
+      </RevealSurface>
 
-      <section className="spw__section">
+      <RevealSurface
+        id="verification-loop-notes"
+        isRevealed={revealedLookup.has("verification-loop-notes")}
+        onReveal={onReveal}
+        className="spw__section spw__section--compact"
+        as="section"
+      >
         <div className="spw__section-head">
           <div>
-            <h3>Local-first instructions for agents</h3>
-            <p>
-              CI should be the final judge, but your instructions should still
-              force the agent to validate before it pushes work upstream.
-            </p>
+            <h3>Practical rules for the new tab</h3>
           </div>
         </div>
-
-        <div className="spw__guidance-list">
-          {LOCAL_FIRST_GUIDANCE.map((item) => (
-            <article key={item} className="spw__guidance-card">
-              {item}
+        <div className="spw__notes">
+          {VERIFICATION_NOTES.map((note) => (
+            <article key={note.title} className="spw__note-card">
+              <h4>{note.title}</h4>
+              <p>{note.body}</p>
             </article>
           ))}
         </div>
-      </section>
-
-      <section className="spw__section">
-        <div className="spw__section-head">
-          <div>
-            <h3>{LEGACY_BOOTSTRAP.title}</h3>
-            <p>{LEGACY_BOOTSTRAP.body}</p>
-          </div>
-        </div>
-
-        <div className="spw__legacy-panel">
-          <div className="spw__legacy-badge">Legacy-friendly rollout</div>
-          <ul className="spw__bullet-list">
-            {LEGACY_BOOTSTRAP.tactics.map((tactic) => (
-              <li key={tactic}>{tactic}</li>
-            ))}
-          </ul>
-        </div>
-      </section>
+      </RevealSurface>
     </div>
-  );
-}
-
-function ComingSoonPanel({ tab }) {
-  return (
-    <section className="spw__coming-soon">
-      <div className="spw__coming-soon-badge">{tab.eyebrow}</div>
-      <h2>{tab.label}</h2>
-      <p>{tab.description}</p>
-      <div className="spw__coming-soon-grid">
-        <div className="spw__coming-soon-card">
-          Planned focus: clear visual rules, scenario walkthroughs, and
-          workshop-friendly command recipes.
-        </div>
-        <div className="spw__coming-soon-card">
-          This tab is scaffolded so the Security &amp; Permissions widget can
-          grow into a multi-view dashboard without changing the surrounding UI.
-        </div>
-      </div>
-    </section>
   );
 }
 
 export default function SecurityPermissionsWidget() {
   const [activeTabId, setActiveTabId] = useState(TABS[0].id);
+  const [revealedIds, setRevealedIds] = useState([]);
   const activeTab = TABS.find((tab) => tab.id === activeTabId) ?? TABS[0];
+  const revealedLookup = useMemo(() => new Set(revealedIds), [revealedIds]);
+
+  const handleReveal = (id) => {
+    setRevealedIds((current) => (current.includes(id) ? current : [...current, id]));
+  };
+
+  const handleReset = () => {
+    setRevealedIds([]);
+  };
 
   return (
     <div className="spw">
-      <p className="spw__intro">
-        A security-focused dashboard for shaping how Copilot behaves before it
-        touches your machine. This first view turns the GitHub Docs guidance on
-        tool permissions into a visual operating model with concrete commands.
-      </p>
+      <div className="spw__toolbar">
+        <button
+          type="button"
+          className="spw__reset-button"
+          onClick={handleReset}
+          disabled={revealedIds.length === 0}
+        >
+          Reset cards
+        </button>
+      </div>
 
       <div className="spw__tabs" role="tablist" aria-label="Security and permissions views">
         {TABS.map((tab) => {
@@ -473,11 +848,11 @@ export default function SecurityPermissionsWidget() {
       </div>
 
       {activeTab.id === "copilot-permissions" ? (
-        <CopilotPermissionsTab />
-      ) : activeTab.id === "verification-loop" ? (
-        <VerificationLoopTab />
+        <CopilotPermissionsTab revealedLookup={revealedLookup} onReveal={handleReveal} />
+      ) : activeTab.id === "code-review-agent" ? (
+        <CodeReviewAgentTab revealedLookup={revealedLookup} onReveal={handleReveal} />
       ) : (
-        <ComingSoonPanel tab={activeTab} />
+        <VerificationLoopTab revealedLookup={revealedLookup} onReveal={handleReveal} />
       )}
     </div>
   );

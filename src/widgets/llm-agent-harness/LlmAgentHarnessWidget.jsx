@@ -4,8 +4,9 @@ import "./LlmAgentHarnessWidget.css";
 
 const WIDTH = 960;
 const HEIGHT = 560;
+const DIAGRAM_X_OFFSET = -130;
 
-const DETAIL_ORDER = ["harness", "llm", "agent", "context", "tools", "user"];
+const DETAIL_ORDER = ["harness", "llm", "agent", "context", "tools"];
 
 const DETAILS = {
   harness: {
@@ -63,17 +64,6 @@ const DETAILS = {
       "Tool results come back into context for the next loop.",
     ],
   },
-  user: {
-    title: "User",
-    subtitle: "Source of the goal, destination for the answer",
-    body:
-      "The user provides the goal. The harness turns that goal into an LLM-and-tools loop, then returns the final answer when the work is complete.",
-    bullets: [
-      "Prompt enters through the harness.",
-      "Final answer exits through the harness.",
-      "The LLM is never contacted directly by the user in this workflow.",
-    ],
-  },
 };
 
 const SUMMARY_CARDS = [
@@ -124,7 +114,7 @@ export default function LlmAgentHarnessWidget() {
       .join("feMergeNode")
       .attr("in", (d) => d);
 
-    const root = svg.append("g");
+    const root = svg.append("g").attr("transform", `translate(${DIAGRAM_X_OFFSET}, 0)`);
     const loopLayer = root.append("g");
     const harnessLayer = root.append("g");
     const contentLayer = root.append("g");
@@ -289,39 +279,6 @@ export default function LlmAgentHarnessWidget() {
       makeInteractive(cardGroup, card.id);
     });
 
-    const userGroup = contentLayer.append("g");
-    userGroup
-      .append("rect")
-      .attr("class", `lah__svg-user${selectedId === "user" ? " is-selected" : ""}`)
-      .attr("x", 40)
-      .attr("y", 220)
-      .attr("width", 132)
-      .attr("height", 136)
-      .attr("rx", 24)
-      .attr("ry", 24);
-    userGroup
-      .append("text")
-      .attr("x", 106)
-      .attr("y", 266)
-      .attr("text-anchor", "middle")
-      .attr("class", "lah__svg-user-icon")
-      .text("👤");
-    userGroup
-      .append("text")
-      .attr("x", 106)
-      .attr("y", 300)
-      .attr("text-anchor", "middle")
-      .attr("class", "lah__svg-user-title")
-      .text("User");
-    userGroup
-      .append("text")
-      .attr("x", 106)
-      .attr("y", 326)
-      .attr("text-anchor", "middle")
-      .attr("class", "lah__svg-user-subtitle")
-      .text("sets the goal");
-    makeInteractive(userGroup, "user");
-
     const llmGroup = contentLayer.append("g");
     llmGroup
       .append("circle")
@@ -356,11 +313,6 @@ export default function LlmAgentHarnessWidget() {
 
   return (
     <div className="lah">
-      <p className="lah__intro">
-        The diagram centers the <strong>Harness</strong> because that's the part that
-        actually runs the system: it stores context, drives the <strong>LLM</strong>,
-        owns the tools, and creates the repeated loop we call an <strong>Agent</strong>.
-      </p>
 
       <div className="lah__layout">
         <section className="lah__panel lah__panel--viz">
@@ -392,7 +344,7 @@ export default function LlmAgentHarnessWidget() {
           </div>
         </section>
 
-        <aside className="lah__panel lah__panel--detail">
+        <section className="lah__panel lah__panel--detail">
           <div className="lah__detail-kicker">Focused explanation</div>
           <h2 className="lah__detail-title">{selected.title}</h2>
           <p className="lah__detail-subtitle">{selected.subtitle}</p>
@@ -402,7 +354,7 @@ export default function LlmAgentHarnessWidget() {
               <li key={bullet}>{bullet}</li>
             ))}
           </ul>
-        </aside>
+        </section>
       </div>
 
       <div className="lah__summary-grid">

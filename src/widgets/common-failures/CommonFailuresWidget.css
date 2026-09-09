@@ -1,0 +1,217 @@
+.cfw {
+  display: grid;
+  gap: 1.2rem;
+}
+
+.cfw__hero {
+  position: relative;
+  padding: 1.3rem;
+  border: 1px solid var(--border-color);
+  border-radius: 24px;
+  overflow: hidden;
+  background:
+    linear-gradient(180deg, color-mix(in srgb, var(--card-bg) 92%, #fff 8%), var(--card-bg)),
+    var(--card-bg);
+  box-shadow: 0 22px 54px rgba(15, 23, 42, 0.08);
+}
+
+.cfw__hero::before {
+  content: "";
+  position: absolute;
+  inset: -5rem -3rem auto auto;
+  width: 14rem;
+  height: 14rem;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(244, 63, 94, 0.18), transparent 68%);
+  pointer-events: none;
+}
+
+.cfw__eyebrow {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  padding: 0.28rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+}
+
+.cfw__hero h2 {
+  position: relative;
+  z-index: 1;
+  margin: 0.8rem 0 0.7rem;
+  font-size: 2.2rem;
+  line-height: 1.1;
+}
+
+.cfw__hero p {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  max-width: 65ch;
+  font-size: 1.1rem;
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+
+.cfw__grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr;
+}
+
+.cfw__card {
+  padding: 1.1rem;
+  border: 1px solid color-mix(in srgb, var(--cfw-accent) 24%, var(--border-color));
+  border-radius: 24px;
+  background:
+    radial-gradient(
+      circle at top right,
+      color-mix(in srgb, var(--cfw-accent) 14%, transparent),
+      transparent 42%
+    ),
+    linear-gradient(180deg, color-mix(in srgb, var(--card-bg) 92%, #fff 8%), var(--card-bg));
+  box-shadow: 0 22px 54px rgba(15, 23, 42, 0.08);
+}
+
+.cfw__toolbar {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.cfw__reset-button {
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  background: var(--card-bg);
+  color: var(--text-h);
+  padding: 0.6rem 1.05rem;
+  font: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.cfw__reset-button:hover:not(:disabled) {
+  border-color: var(--accent);
+}
+
+.cfw__reset-button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.cfw__reveal-surface {
+  position: relative;
+  overflow: hidden;
+}
+
+.cfw__reveal-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  transition: filter 180ms ease, opacity 180ms ease;
+}
+
+.cfw__reveal-surface:not(.is-revealed) .cfw__reveal-content {
+  filter: blur(9px);
+  opacity: 0.65;
+  pointer-events: none;
+  user-select: none;
+}
+
+.cfw__reveal-button {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.cfw__reveal-button:focus-visible,
+.cfw__reset-button:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--accent) 40%, white);
+  outline-offset: -3px;
+}
+
+.cfw__card-head {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.cfw__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 12px;
+  font-size: 1.35rem;
+  background: color-mix(in srgb, var(--cfw-accent) 16%, transparent);
+}
+
+.cfw__card-head h3 {
+  margin: 0;
+  font-size: 1.3rem;
+  color: var(--text-h);
+}
+
+.cfw__summary {
+  margin: 0;
+  font-size: 1.08rem;
+  line-height: 1.55;
+  color: var(--text-muted);
+}
+
+.cfw__points {
+  margin: 0;
+  padding-left: 1.2rem;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.cfw__points li {
+  color: var(--text-h);
+  font-size: 1.05rem;
+  line-height: 1.55;
+}
+
+.cfw__callout {
+  margin: 0;
+  padding: 0.85rem 1rem;
+  border-radius: 14px;
+  font-size: 0.98rem;
+  line-height: 1.5;
+}
+
+.cfw__callout--rule {
+  color: var(--text-h);
+  background: color-mix(in srgb, var(--cfw-accent) 10%, transparent);
+  border: 1px dashed color-mix(in srgb, var(--cfw-accent) 30%, var(--border-color));
+}
+
+.cfw__callout--tip {
+  color: var(--text-h);
+  background: color-mix(in srgb, #0ea5e9 8%, transparent);
+  border: 1px solid color-mix(in srgb, #0ea5e9 18%, var(--border-color));
+}
+
+@media (max-width: 720px) {
+  .cfw__hero,
+  .cfw__card {
+    padding: 1rem;
+  }
+
+  .cfw__hero h2 {
+    font-size: 1.6rem;
+  }
+}
