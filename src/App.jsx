@@ -5,7 +5,7 @@ import widgets from "./widgets/registry.js";
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
       <Routes>
         <Route path="/" element={<Dashboard />} />
         {widgets.map((widget) => (
