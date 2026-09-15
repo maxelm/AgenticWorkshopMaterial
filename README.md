@@ -1,3 +1,24 @@
+## Deployment (GitHub Pages)
+
+This app is deployed as a static site to GitHub Pages at
+https://maxelm.github.io/AgenticWorkshopMaterial/
+
+To publish a new build after pushing changes to `main`:
+
+```sh
+npm run deploy
+```
+
+This builds the app (`vite build`, using the `/AgenticWorkshopMaterial/` base
+path), generates a `404.html` fallback for client-side routing, and publishes
+`dist/` to the `gh-pages` branch via the `gh-pages` package. No CI/CD is
+configured — deploys are manual/on-demand.
+
+Note: `OPENWEATHER_API_KEY` / `BERGET_API_KEY` are intentionally not set in
+the production build (this is a static site with no backend, so any value
+would be publicly visible in the bundle). Widgets that need them show a
+"not configured" state in production.
+
 # React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
