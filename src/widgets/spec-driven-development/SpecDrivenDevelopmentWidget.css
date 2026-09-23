@@ -3,11 +3,6 @@
   gap: 1.2rem;
 }
 
-.sddw__toolbar {
-  display: flex;
-  justify-content: flex-end;
-}
-
 .sddw__hero,
 .sddw__section,
 .sddw__card,
@@ -141,55 +136,6 @@
 .sddw__reveal-surface {
   position: relative;
   overflow: hidden;
-}
-
-.sddw__reveal-content {
-  transition: filter 180ms ease, opacity 180ms ease;
-}
-
-.sddw__reveal-surface:not(.is-revealed) .sddw__reveal-content {
-  filter: blur(9px);
-  opacity: 0.65;
-  pointer-events: none;
-  user-select: none;
-}
-
-.sddw__reveal-button {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  width: 100%;
-  border: 0;
-  padding: 0;
-  background: transparent;
-  cursor: pointer;
-}
-
-.sddw__reveal-button:focus-visible,
-.sddw__reset-button:focus-visible {
-  outline: 3px solid color-mix(in srgb, var(--accent) 40%, white);
-  outline-offset: -3px;
-}
-
-.sddw__reset-button {
-  border: 1px solid var(--border-color);
-  border-radius: 999px;
-  background: var(--card-bg);
-  color: var(--text-h);
-  padding: 0.55rem 0.95rem;
-  font: inherit;
-  font-size: 0.9rem;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.sddw__reset-button:hover:not(:disabled) {
-  border-color: var(--accent);
-}
-
-.sddw__reset-button:disabled {
-  opacity: 0.55;
-  cursor: not-allowed;
 }
 
 .sddw__hero-card strong {

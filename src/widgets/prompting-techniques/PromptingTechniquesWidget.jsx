@@ -1,35 +1,17 @@
-import { useMemo, useState } from "react";
 import { PRINCIPLES } from "./promptingData.js";
 import "./PromptingTechniquesWidget.css";
 
-function RevealSurface({ id, isRevealed, onReveal, className, style, children }) {
+function RevealSurface({ className, style, children }) {
   return (
-    <article
-      className={`${className} ptw__reveal-surface${isRevealed ? " is-revealed" : ""}`}
-      style={style}
-    >
-      {!isRevealed ? (
-        <button
-          type="button"
-          className="ptw__reveal-button"
-          onClick={() => onReveal(id)}
-          aria-label={`Reveal ${id.replaceAll("-", " ")}`}
-        />
-      ) : null}
-
-      <div className="ptw__reveal-content" aria-hidden={!isRevealed}>
-        {children}
-      </div>
+    <article className={`${className} ptw__reveal-surface`} style={style}>
+      <div className="ptw__reveal-content">{children}</div>
     </article>
   );
 }
 
-function PrincipleCard({ principle, isRevealed, onReveal }) {
+function PrincipleCard({ principle }) {
   return (
     <RevealSurface
-      id={principle.id}
-      isRevealed={isRevealed}
-      onReveal={onReveal}
       className="ptw__card"
       style={{ "--ptw-accent": principle.accent }}
     >
@@ -74,18 +56,6 @@ function PrincipleCard({ principle, isRevealed, onReveal }) {
 }
 
 export default function PromptingTechniquesWidget() {
-  const [revealedIds, setRevealedIds] = useState([]);
-
-  const revealedLookup = useMemo(() => new Set(revealedIds), [revealedIds]);
-
-  const handleReveal = (id) => {
-    setRevealedIds((current) => (current.includes(id) ? current : [...current, id]));
-  };
-
-  const handleReset = () => {
-    setRevealedIds([]);
-  };
-
   return (
     <div className="ptw">
       <section className="ptw__hero">
@@ -107,25 +77,9 @@ export default function PromptingTechniquesWidget() {
         </a>
       </section>
 
-      <div className="ptw__toolbar">
-        <button
-          type="button"
-          className="ptw__reset-button"
-          onClick={handleReset}
-          disabled={revealedIds.length === 0}
-        >
-          Reset cards
-        </button>
-      </div>
-
       <section className="ptw__grid" aria-label="General principles">
         {PRINCIPLES.map((principle) => (
-          <PrincipleCard
-            key={principle.id}
-            principle={principle}
-            isRevealed={revealedLookup.has(principle.id)}
-            onReveal={handleReveal}
-          />
+          <PrincipleCard key={principle.id} principle={principle} />
         ))}
       </section>
     </div>

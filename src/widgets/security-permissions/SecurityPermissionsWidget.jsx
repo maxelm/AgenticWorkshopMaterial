@@ -25,32 +25,10 @@ import {
 } from "./permissionsData.js";
 import "./SecurityPermissionsWidget.css";
 
-function RevealSurface({
-  id,
-  isRevealed,
-  onReveal,
-  className,
-  style,
-  children,
-  as: Component = "div",
-}) {
+function RevealSurface({ className, style, children, as: Component = "div" }) {
   return (
-    <Component
-      className={`${className} spw__reveal-surface${isRevealed ? " is-revealed" : ""}`}
-      style={style}
-    >
-      {!isRevealed ? (
-        <button
-          type="button"
-          className="spw__reveal-button"
-          onClick={() => onReveal(id)}
-          aria-label={`Reveal ${id.replaceAll("-", " ")}`}
-        />
-      ) : null}
-
-      <div className="spw__reveal-content" aria-hidden={!isRevealed}>
-        {children}
-      </div>
+    <Component className={`${className} spw__reveal-surface`} style={style}>
+      <div className="spw__reveal-content">{children}</div>
     </Component>
   );
 }
@@ -74,7 +52,7 @@ function ToneColumn({ title, items, tone, emptyLabel }) {
   );
 }
 
-function CopilotPermissionsTab({ revealedLookup, onReveal }) {
+function CopilotPermissionsTab() {
   const [activeRecipeId, setActiveRecipeId] = useState(COMMAND_RECIPES[0].id);
 
   const activeRecipe = useMemo(
@@ -85,9 +63,6 @@ function CopilotPermissionsTab({ revealedLookup, onReveal }) {
   return (
     <div className="spw__tab-panel">
       <RevealSurface
-        id="copilot-permissions-hero"
-        isRevealed={revealedLookup.has("copilot-permissions-hero")}
-        onReveal={onReveal}
         className="spw__hero spw__hero--left-metrics"
         as="section"
       >
@@ -118,9 +93,6 @@ function CopilotPermissionsTab({ revealedLookup, onReveal }) {
       </RevealSurface>
 
       <RevealSurface
-        id="copilot-permissions-docs"
-        isRevealed={revealedLookup.has("copilot-permissions-docs")}
-        onReveal={onReveal}
         className="spw__section"
         as="section"
       >
@@ -180,9 +152,6 @@ function CopilotPermissionsTab({ revealedLookup, onReveal }) {
       </RevealSurface>
 
       <RevealSurface
-        id="copilot-permissions-layers"
-        isRevealed={revealedLookup.has("copilot-permissions-layers")}
-        onReveal={onReveal}
         className="spw__section"
         as="section"
       >
@@ -222,9 +191,6 @@ function CopilotPermissionsTab({ revealedLookup, onReveal }) {
       </RevealSurface>
 
       <RevealSurface
-        id="copilot-permissions-persistence"
-        isRevealed={revealedLookup.has("copilot-permissions-persistence")}
-        onReveal={onReveal}
         className="spw__section"
         as="section"
       >
@@ -255,9 +221,6 @@ function CopilotPermissionsTab({ revealedLookup, onReveal }) {
       </RevealSurface>
 
       <RevealSurface
-        id="copilot-permissions-recipes"
-        isRevealed={revealedLookup.has("copilot-permissions-recipes")}
-        onReveal={onReveal}
         className="spw__section"
         as="section"
       >
@@ -336,9 +299,6 @@ function CopilotPermissionsTab({ revealedLookup, onReveal }) {
       </RevealSurface>
 
       <RevealSurface
-        id="copilot-permissions-examples"
-        isRevealed={revealedLookup.has("copilot-permissions-examples")}
-        onReveal={onReveal}
         className="spw__section"
         as="section"
       >
@@ -377,9 +337,6 @@ function CopilotPermissionsTab({ revealedLookup, onReveal }) {
       </RevealSurface>
 
       <RevealSurface
-        id="copilot-permissions-notes"
-        isRevealed={revealedLookup.has("copilot-permissions-notes")}
-        onReveal={onReveal}
         className="spw__section spw__section--compact"
         as="section"
       >
@@ -401,13 +358,10 @@ function CopilotPermissionsTab({ revealedLookup, onReveal }) {
   );
 }
 
-function CodeReviewAgentTab({ revealedLookup, onReveal }) {
+function CodeReviewAgentTab() {
   return (
     <div className="spw__tab-panel">
       <RevealSurface
-        id="code-review-agent-hero"
-        isRevealed={revealedLookup.has("code-review-agent-hero")}
-        onReveal={onReveal}
         className="spw__hero spw__hero--review spw__hero--left-metrics"
         as="section"
       >
@@ -439,9 +393,6 @@ function CodeReviewAgentTab({ revealedLookup, onReveal }) {
       </RevealSurface>
 
       <RevealSurface
-        id="code-review-agent-flow"
-        isRevealed={revealedLookup.has("code-review-agent-flow")}
-        onReveal={onReveal}
         className="spw__section"
         as="section"
       >
@@ -472,9 +423,6 @@ function CodeReviewAgentTab({ revealedLookup, onReveal }) {
       </RevealSurface>
 
       <RevealSurface
-        id="code-review-agent-pillars"
-        isRevealed={revealedLookup.has("code-review-agent-pillars")}
-        onReveal={onReveal}
         className="spw__section"
         as="section"
       >
@@ -517,9 +465,6 @@ function CodeReviewAgentTab({ revealedLookup, onReveal }) {
       </RevealSurface>
 
       <RevealSurface
-        id="code-review-agent-customization"
-        isRevealed={revealedLookup.has("code-review-agent-customization")}
-        onReveal={onReveal}
         className="spw__section"
         as="section"
       >
@@ -544,9 +489,6 @@ function CodeReviewAgentTab({ revealedLookup, onReveal }) {
       </RevealSurface>
 
       <RevealSurface
-        id="code-review-agent-example"
-        isRevealed={revealedLookup.has("code-review-agent-example")}
-        onReveal={onReveal}
         className="spw__section"
         as="section"
       >
@@ -580,9 +522,6 @@ function CodeReviewAgentTab({ revealedLookup, onReveal }) {
       </RevealSurface>
 
       <RevealSurface
-        id="code-review-agent-resources"
-        isRevealed={revealedLookup.has("code-review-agent-resources")}
-        onReveal={onReveal}
         className="spw__section"
         as="section"
       >
@@ -613,9 +552,6 @@ function CodeReviewAgentTab({ revealedLookup, onReveal }) {
       </RevealSurface>
 
       <RevealSurface
-        id="code-review-agent-notes"
-        isRevealed={revealedLookup.has("code-review-agent-notes")}
-        onReveal={onReveal}
         className="spw__section spw__section--compact"
         as="section"
       >
@@ -637,13 +573,10 @@ function CodeReviewAgentTab({ revealedLookup, onReveal }) {
   );
 }
 
-function VerificationLoopTab({ revealedLookup, onReveal }) {
+function VerificationLoopTab() {
   return (
     <div className="spw__tab-panel">
       <RevealSurface
-        id="verification-loop-overview"
-        isRevealed={revealedLookup.has("verification-loop-overview")}
-        onReveal={onReveal}
         className="spw__section"
         as="section"
       >
@@ -663,9 +596,6 @@ function VerificationLoopTab({ revealedLookup, onReveal }) {
       </RevealSurface>
 
       <RevealSurface
-        id="verification-loop-pillars"
-        isRevealed={revealedLookup.has("verification-loop-pillars")}
-        onReveal={onReveal}
         className="spw__section"
         as="section"
       >
@@ -708,9 +638,6 @@ function VerificationLoopTab({ revealedLookup, onReveal }) {
       </RevealSurface>
 
       <RevealSurface
-        id="verification-loop-pr-gate"
-        isRevealed={revealedLookup.has("verification-loop-pr-gate")}
-        onReveal={onReveal}
         className="spw__section"
         as="section"
       >
@@ -750,9 +677,6 @@ function VerificationLoopTab({ revealedLookup, onReveal }) {
       </RevealSurface>
 
       <RevealSurface
-        id="verification-loop-architecture"
-        isRevealed={revealedLookup.has("verification-loop-architecture")}
-        onReveal={onReveal}
         className="spw__section"
         as="section"
       >
@@ -777,9 +701,6 @@ function VerificationLoopTab({ revealedLookup, onReveal }) {
       </RevealSurface>
 
       <RevealSurface
-        id="verification-loop-notes"
-        isRevealed={revealedLookup.has("verification-loop-notes")}
-        onReveal={onReveal}
         className="spw__section spw__section--compact"
         as="section"
       >
@@ -803,31 +724,10 @@ function VerificationLoopTab({ revealedLookup, onReveal }) {
 
 export default function SecurityPermissionsWidget() {
   const [activeTabId, setActiveTabId] = useState(TABS[0].id);
-  const [revealedIds, setRevealedIds] = useState([]);
   const activeTab = TABS.find((tab) => tab.id === activeTabId) ?? TABS[0];
-  const revealedLookup = useMemo(() => new Set(revealedIds), [revealedIds]);
-
-  const handleReveal = (id) => {
-    setRevealedIds((current) => (current.includes(id) ? current : [...current, id]));
-  };
-
-  const handleReset = () => {
-    setRevealedIds([]);
-  };
 
   return (
     <div className="spw">
-      <div className="spw__toolbar">
-        <button
-          type="button"
-          className="spw__reset-button"
-          onClick={handleReset}
-          disabled={revealedIds.length === 0}
-        >
-          Reset cards
-        </button>
-      </div>
-
       <div className="spw__tabs" role="tablist" aria-label="Security and permissions views">
         {TABS.map((tab) => {
           const isActive = tab.id === activeTab.id;
@@ -848,11 +748,11 @@ export default function SecurityPermissionsWidget() {
       </div>
 
       {activeTab.id === "copilot-permissions" ? (
-        <CopilotPermissionsTab revealedLookup={revealedLookup} onReveal={handleReveal} />
+        <CopilotPermissionsTab />
       ) : activeTab.id === "code-review-agent" ? (
-        <CodeReviewAgentTab revealedLookup={revealedLookup} onReveal={handleReveal} />
+        <CodeReviewAgentTab />
       ) : (
-        <VerificationLoopTab revealedLookup={revealedLookup} onReveal={handleReveal} />
+        <VerificationLoopTab />
       )}
     </div>
   );

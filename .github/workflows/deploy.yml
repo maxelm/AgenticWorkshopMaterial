@@ -1,0 +1,48 @@
+name: Deploy to GitHub Pages
+
+# Build the static site and publish dist/ to the gh-pages branch, which this
+# repo's Pages settings serve ("Deploy from a branch"). Runs on every push to
+# main and on manual dispatch (workflow_dispatch) so a deploy can be triggered
+# on demand — e.g. to publish changes merged from a branch without waiting for
+# a main push.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Repo Pages source is the gh-pages branch, so the workflow only needs to write
+# repository contents (to update that branch), not call the Pages API.
+permissions:
+  contents: write
+
+# Avoid overlapping deploys; cancel an in-progress run if a newer one starts.
+concurrency:
+  group: gh-pages-deploy
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        # vite.config.js serves the production build from the
+        # /AgenticWorkshopMaterial/ base path; postbuild also writes dist/404.html
+        # so client-side routes resolve on Pages.
+        run: npm run build
+
+      - name: Publish dist/ to the gh-pages branch
+        run: npx gh-pages -d dist -b gh-pages --nojekyll -m "Deploy latest build"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
