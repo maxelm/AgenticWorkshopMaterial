@@ -1,4 +1,3 @@
-import { useMemo, useState } from "react";
 import {
   BENEFITS,
   COMMAND_FLOW,
@@ -13,32 +12,10 @@ import {
 } from "./specDrivenData.js";
 import "./SpecDrivenDevelopmentWidget.css";
 
-function RevealSurface({
-  id,
-  isRevealed,
-  onReveal,
-  className,
-  style,
-  children,
-  as: Component = "div",
-}) {
+function RevealSurface({ className, style, children, as: Component = "div" }) {
   return (
-    <Component
-      className={`${className} sddw__reveal-surface${isRevealed ? " is-revealed" : ""}`}
-      style={style}
-    >
-      {!isRevealed ? (
-        <button
-          type="button"
-          className="sddw__reveal-button"
-          onClick={() => onReveal(id)}
-          aria-label={`Reveal ${id.replaceAll("-", " ")}`}
-        />
-      ) : null}
-
-      <div className="sddw__reveal-content" aria-hidden={!isRevealed}>
-        {children}
-      </div>
+    <Component className={`${className} sddw__reveal-surface`} style={style}>
+      <div className="sddw__reveal-content">{children}</div>
     </Component>
   );
 }
@@ -58,21 +35,6 @@ function ResourceCard({ resource }) {
 }
 
 export default function SpecDrivenDevelopmentWidget() {
-  const [revealedIds, setRevealedIds] = useState([]);
-
-  const revealedLookup = useMemo(
-    () => new Set(revealedIds),
-    [revealedIds]
-  );
-
-  const handleReveal = (id) => {
-    setRevealedIds((current) => (current.includes(id) ? current : [...current, id]));
-  };
-
-  const handleReset = () => {
-    setRevealedIds([]);
-  };
-
   return (
     <div className="sddw">
       <section className="sddw__hero">
@@ -109,21 +71,7 @@ export default function SpecDrivenDevelopmentWidget() {
         </div>
       </section>
 
-      <div className="sddw__toolbar">
-        <button
-          type="button"
-          className="sddw__reset-button"
-          onClick={handleReset}
-          disabled={revealedIds.length === 0}
-        >
-          Reset cards
-        </button>
-      </div>
-
       <RevealSurface
-        id="section-practice"
-        isRevealed={revealedLookup.has("section-practice")}
-        onReveal={handleReveal}
         className="sddw__section"
         as="section"
       >
@@ -157,9 +105,6 @@ export default function SpecDrivenDevelopmentWidget() {
       </RevealSurface>
 
       <RevealSurface
-        id="section-lifecycle"
-        isRevealed={revealedLookup.has("section-lifecycle")}
-        onReveal={handleReveal}
         className="sddw__section"
         as="section"
       >
@@ -190,9 +135,6 @@ export default function SpecDrivenDevelopmentWidget() {
       </RevealSurface>
 
       <RevealSurface
-        id="section-speckit"
-        isRevealed={revealedLookup.has("section-speckit")}
-        onReveal={handleReveal}
         className="sddw__section"
         as="section"
       >
@@ -267,9 +209,6 @@ export default function SpecDrivenDevelopmentWidget() {
       </RevealSurface>
 
       <RevealSurface
-        id="section-started"
-        isRevealed={revealedLookup.has("section-started")}
-        onReveal={handleReveal}
         className="sddw__section"
         as="section"
       >
@@ -296,9 +235,6 @@ export default function SpecDrivenDevelopmentWidget() {
       </RevealSurface>
 
       <RevealSurface
-        id="section-resources"
-        isRevealed={revealedLookup.has("section-resources")}
-        onReveal={handleReveal}
         className="sddw__section"
         as="section"
       >

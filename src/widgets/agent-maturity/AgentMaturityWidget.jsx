@@ -1,47 +1,22 @@
-import { useMemo, useState } from "react";
 import {
   MATURITY_DIMENSIONS,
   MATURITY_LEVELS,
 } from "./maturityData.js";
 import "./AgentMaturityWidget.css";
 
-function RevealSurface({
-  isRevealed,
-  onReveal,
-  ariaLabel,
-  className,
-  style,
-  children,
-}) {
+function RevealSurface({ className, style, children }) {
   return (
-    <div
-      className={`${className} amw__reveal-surface${isRevealed ? " is-revealed" : ""}`}
-      style={style}
-    >
-      {!isRevealed ? (
-        <button
-          type="button"
-          className="amw__reveal-button"
-          onClick={onReveal}
-          aria-label={ariaLabel}
-        />
-      ) : null}
-
-      <div className="amw__reveal-content" aria-hidden={!isRevealed}>
-        {children}
-      </div>
+    <div className={`${className} amw__reveal-surface`} style={style}>
+      <div className="amw__reveal-content">{children}</div>
     </div>
   );
 }
 
-function LevelCard({ level, isLast, isRevealed, onReveal }) {
+function LevelCard({ level, isLast }) {
   return (
     <RevealSurface
       className="amw__level-card"
       style={{ "--amw-accent": level.accent }}
-      isRevealed={isRevealed}
-      onReveal={() => onReveal(level.id)}
-      ariaLabel={`Reveal Level ${level.step}: ${level.label}`}
     >
       <article>
         <div className="amw__level-topline">
@@ -72,25 +47,6 @@ function LevelCard({ level, isLast, isRevealed, onReveal }) {
 }
 
 export default function AgentMaturityWidget() {
-  const [revealedIds, setRevealedIds] = useState([]);
-
-  const revealedLookup = useMemo(
-    () => new Set(revealedIds),
-    [revealedIds]
-  );
-
-  const handleReveal = (levelId) => {
-    setRevealedIds((current) =>
-      current.includes(levelId) ? current : [...current, levelId]
-    );
-  };
-
-  const handleReset = () => {
-    setRevealedIds([]);
-  };
-
-  const isComparisonRevealed = revealedLookup.has("comparison");
-
   return (
     <div className="amw">
       <section className="amw__hero">
@@ -122,34 +78,16 @@ export default function AgentMaturityWidget() {
       </section>
 
       <section className="amw__steps" aria-label="Three maturity levels">
-        <div className="amw__steps-toolbar">
-          <button
-            type="button"
-            className="amw__reset-button"
-            onClick={handleReset}
-            disabled={revealedIds.length === 0}
-          >
-            Reset cards
-          </button>
-        </div>
-
         {MATURITY_LEVELS.map((level, index) => (
           <LevelCard
             key={level.id}
             level={level}
             isLast={index === MATURITY_LEVELS.length - 1}
-            isRevealed={revealedLookup.has(level.id)}
-            onReveal={handleReveal}
           />
         ))}
       </section>
 
-      <RevealSurface
-        className="amw__section"
-        isRevealed={isComparisonRevealed}
-        onReveal={() => handleReveal("comparison")}
-        ariaLabel="Reveal operating model comparison"
-      >
+      <RevealSurface className="amw__section">
         <section>
           <div className="amw__section-head">
             <div>
