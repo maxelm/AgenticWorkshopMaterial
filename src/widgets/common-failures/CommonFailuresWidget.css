@@ -80,32 +80,6 @@
   box-shadow: 0 22px 54px rgba(15, 23, 42, 0.08);
 }
 
-.cfw__toolbar {
-  display: flex;
-  justify-content: flex-end;
-}
-
-.cfw__reset-button {
-  border: 1px solid var(--border-color);
-  border-radius: 999px;
-  background: var(--card-bg);
-  color: var(--text-h);
-  padding: 0.6rem 1.05rem;
-  font: inherit;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.cfw__reset-button:hover:not(:disabled) {
-  border-color: var(--accent);
-}
-
-.cfw__reset-button:disabled {
-  opacity: 0.55;
-  cursor: not-allowed;
-}
-
 .cfw__reveal-surface {
   position: relative;
   overflow: hidden;
@@ -115,31 +89,6 @@
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
-  transition: filter 180ms ease, opacity 180ms ease;
-}
-
-.cfw__reveal-surface:not(.is-revealed) .cfw__reveal-content {
-  filter: blur(9px);
-  opacity: 0.65;
-  pointer-events: none;
-  user-select: none;
-}
-
-.cfw__reveal-button {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  width: 100%;
-  border: 0;
-  padding: 0;
-  background: transparent;
-  cursor: pointer;
-}
-
-.cfw__reveal-button:focus-visible,
-.cfw__reset-button:focus-visible {
-  outline: 3px solid color-mix(in srgb, var(--accent) 40%, white);
-  outline-offset: -3px;
 }
 
 .cfw__card-head {

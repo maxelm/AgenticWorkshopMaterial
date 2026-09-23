@@ -109,11 +109,6 @@
   grid-template-columns: 1fr;
 }
 
-.amw__steps-toolbar {
-  display: flex;
-  justify-content: flex-end;
-}
-
 .amw__level-card,
 .amw__section,
 .amw__comparison-card {
@@ -134,55 +129,6 @@
 
 .amw__reveal-surface {
   position: relative;
-}
-
-.amw__reveal-content {
-  transition: filter 180ms ease, opacity 180ms ease;
-}
-
-.amw__reveal-surface:not(.is-revealed) .amw__reveal-content {
-  filter: blur(9px);
-  opacity: 0.65;
-  pointer-events: none;
-  user-select: none;
-}
-
-.amw__reveal-button {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  width: 100%;
-  border: 0;
-  padding: 0;
-  background: transparent;
-  cursor: pointer;
-}
-
-.amw__reveal-button:focus-visible,
-.amw__reset-button:focus-visible {
-  outline: 3px solid color-mix(in srgb, var(--amw-accent, var(--accent)) 40%, white);
-  outline-offset: -3px;
-}
-
-.amw__reset-button {
-  border: 1px solid var(--border-color);
-  border-radius: 999px;
-  background: var(--card-bg);
-  color: var(--text-h);
-  padding: 0.55rem 0.95rem;
-  font: inherit;
-  font-size: 0.9rem;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.amw__reset-button:hover:not(:disabled) {
-  border-color: var(--accent);
-}
-
-.amw__reset-button:disabled {
-  opacity: 0.55;
-  cursor: not-allowed;
 }
 
 .amw__level-topline {
